@@ -31,7 +31,7 @@ void logAction(char *device, int err)
      now = time(NULL);
      fprintf(flog, "%s", asctime(localtime(&now)));
      if (err)
-	 fprintf(flog, "Unsuccessfull trial to unmount %s by %s: %s\n", device, pwent->pw_name, sys_errlist[err]);
+	 fprintf(flog, "Unsuccessfull trial to unmount %s by %s: %s\n", device, pwent->pw_name, sys_errlist(err));
      else
 	 fprintf(flog, "%s unmounted by %s\n", device, pwent->pw_name);
      fclose(flog);
@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
  {
      if (lstat(entry->mnt_dir, &stats))
      {
-	 fprintf(stderr, "userumount: Could not lstat %s: %s\n", entry->mnt_dir, sys_errlist[errno]);
+	 fprintf(stderr, "userumount: Could not lstat %s: %s\n", entry->mnt_dir, sys_errlist(errno));
 	 endmntent(ufstab);
 	 exit(-4);
      }
@@ -114,7 +114,7 @@ int main(int argc, char *argv[])
  }
  if (umount(argv[1]))
  {
-     fprintf(stderr, "userumount: Could not unmount %s: %s\n", argv[1], sys_errlist[errno]);
+     fprintf(stderr, "userumount: Could not unmount %s: %s\n", argv[1], sys_errlist(errno));
 #ifdef LOGFILE
      logAction(argv[1], errno);
 #endif
@@ -127,12 +127,12 @@ int main(int argc, char *argv[])
 #endif
      if (!(tmptab = setmntent(TMPTAB, "w")))
      {
-	 fprintf(stderr, "userumount: Error writing %s: %s\n -> %s %s\n", TMPTAB, sys_errlist[errno], warning, MTAB);
+	 fprintf(stderr, "userumount: Error writing %s: %s\n -> %s %s\n", TMPTAB, strerror(errno), warning, MTAB);
 	 exit(1);
      }
      if (!(mtab = setmntent(MTAB, "r")))
      {
-	 fprintf(stderr, "userumount: Warning - error reading %s: %s\n", MTAB, sys_errlist[errno]);
+	 fprintf(stderr, "userumount: Warning - error reading %s: %s\n", MTAB, strerror(errno));
 	 endmntent(tmptab);
 	 unlink(TMPTAB);
 	 exit(1);
@@ -143,7 +143,7 @@ int main(int argc, char *argv[])
 	 {
 	     if (addmntent(tmptab, entry))
 	     {
-		 fprintf(stderr, "userumount: Error writing %s: %s\n -> %s %s\n", TMPTAB, sys_errlist[errno], warning, MTAB);
+		 fprintf(stderr, "userumount: Error writing %s: %s\n -> %s %s\n", TMPTAB, strerror(errno), warning, MTAB);
 		 endmntent(tmptab);
 		 endmntent(mtab);
 		 unlink(TMPTAB);
@@ -155,7 +155,7 @@ int main(int argc, char *argv[])
      endmntent(tmptab);
      if (rename(TMPTAB, MTAB))
      {
-	 fprintf(stderr, "userumount: %s %s : %s\n", warning, MTAB, sys_errlist[errno]);
+	 fprintf(stderr, "userumount: %s %s : %s\n", warning, MTAB, strerror(errno));
 	 unlink(TMPTAB);
      }
  }
