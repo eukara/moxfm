@@ -34,6 +34,8 @@ void fileEditCb(Widget w, XtPointer client_data, XtPointer call_data)
  int item;
 
  XtVaGetValues(fw->form, XmNuserData, (XtPointer) &item, NULL);
+ /* XtVaGetValues may wipe fw... BUG? */
+ fw = (FileWindowRec *) client_data;
  doEdit(fw->directory, fw->files[item]->name);
 }
 
@@ -105,8 +107,10 @@ void fileViewCb(Widget w, XtPointer client_data, XtPointer call_data)
 {
  FileWindowRec *fw = (FileWindowRec *) client_data;
  int item;
-
+ 
  XtVaGetValues(fw->form, XmNuserData, (XtPointer) &item, NULL);
+ /* XtVaGetValues may wipe fw... BUG? */
+ fw = (FileWindowRec *) client_data;
  doView(fw->directory, fw->files[item]->name);
 }
 
