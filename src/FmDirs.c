@@ -28,6 +28,10 @@
 #include <sys/types.h>	/* apparently needed on SunOS 4.x */
 #include <sys/statvfs.h>
 #else
+#ifdef __OpenBSD__
+#include <sys/param.h>
+#include <sys/mount.h>
+#else
 #ifdef __NetBSD__
 #include <sys/param.h>
 #include <sys/mount.h>
@@ -38,6 +42,7 @@
 #include <sys/vfs.h>
 #endif	/* OSF1 */
 #endif	/* __NetBSD__ */
+#endif  /* __OpenBSD__ */
 #endif	/* USE_STATVFS */
 
 #ifdef _AIX

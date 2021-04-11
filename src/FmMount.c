@@ -8,6 +8,10 @@
   functions & data for mounting devices                                                   
 -----------------------------------------------------------------------------*/
 
+#ifdef __OpenBSD__
+#define NO_GETMNTENT
+#endif
+
 #ifdef SVR4
 #ifndef IRIX
 #define SVR4_MNT

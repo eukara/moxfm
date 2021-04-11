@@ -28,11 +28,14 @@
 #ifdef hpux
 #pragma alloca
 #else
+#ifdef __OpenBSD__
+#else
 #ifdef __NetBSD__
 #pragma alloca
 #else
 #include <alloca.h>
 #endif	/* __NetBSD__ */
+#endif  /* __OpenBSD__ */
 #endif	/* hpux */
 #endif	/* _AIX */
 

@@ -23,11 +23,9 @@ XCOMM  the option to use magic headers.
 
 XCOMM  Libraries. *************************************
 
-XCOMM  Set XMINCDIR and XMLIBDIR as required by
-XCOMM  your system if the Motif library is not on the standard path.
-XCOMM  E.g.:
-XCOMM XMINCDIR = -I/usr/include/Motif1.2
-XCOMM XMLIBDIR = -L/usr/lib/Motif1.2
+XCOMM Make sure /usr/local is respected on BSD systems 
+XMINCDIR = -I/usr/local/include
+XMLIBDIR = -L/usr/local/lib/
 
 XCOMM  How to link the Motif library:
 XMLIB = -lXm
